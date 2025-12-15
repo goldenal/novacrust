@@ -1,5 +1,5 @@
 
-import { Body, Controller, Get, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UsePipes, ValidationPipe, Query } from '@nestjs/common';
 import { WalletService } from '../service/wallet.service';
 import { CreateWalletDto, FundWalletDto, TransferWalletDto } from '../dto/wallet.dto';
 
@@ -26,7 +26,11 @@ export class WalletController {
   }
 
   @Get(':id')
-  async getWallet(@Param('id') id: string) {
-    return this.walletService.getWallet(id);
+  async getWallet(
+    @Param('id') id: string,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
+    return this.walletService.getWallet(id, page, limit);
   }
 }

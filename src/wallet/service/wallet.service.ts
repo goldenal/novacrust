@@ -24,26 +24,34 @@ export class WalletService {
     });
   }
 
-  async getWallet(id: string): Promise<any> {
-    const wallet = await this.walletModel.findByPk(id, {
-      include: [{ model: Transaction, order: [['createdAt', 'DESC']] }],
-    });
+  async getWallet(id: string, page = 1, limit = 10): Promise<any> {
+    const wallet = await this.walletModel.findByPk(id);
 
     if (!wallet) {
       throw new NotFoundException('Wallet not found');
     }
 
-    // Convert BigInt balance to number for JSON response ease, 
-    // or keep as string if precision > 2^53 is a concern (unlikely for cents in this context)
-    // Here we return the raw object but usually we need a transformation interceptor.
-    // For simplicity, we'll let NestJS serializer handle it, but BigInt needs explicit handling usually.
+    const { count, rows } = await this.transactionModel.findAndCountAll({
+      where: { walletId: id },
+      order: [['createdAt', 'DESC']],
+      limit: limit,
+      offset: (page - 1) * limit,
+    });
+
     return {
       wallet: {
         id: wallet.id,
         currency: wallet.currency,
-        balance: Number(wallet.balance), // Safe for values < 9 quadrillion
+        balance: Number(wallet.balance),
       },
-      transactions: wallet.transactions,
+      transactions: rows,
+      meta: {
+        totalItems: count,
+        itemCount: rows.length,
+        itemsPerPage: limit,
+        totalPages: Math.ceil(count / limit),
+        currentPage: page,
+      },
     };
   }
 
