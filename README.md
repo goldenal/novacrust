@@ -95,8 +95,8 @@ Adds funds to a wallet. Requires a unique `reference` for idempotency.
 
 **Note:**
 
-Here we assume that the payment from the external payment provider(e.g paystack or flutterwave) is successful
-and we only need to update the wallet balance
+**Here we assume that the payment from the external payment provider(e.g paystack or flutterwave) is successful
+and we only need to update the wallet balance**
 
 **Request:**
 
