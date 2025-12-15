@@ -57,6 +57,8 @@ export class WalletService {
 
   async fundWallet(walletId: string, fundWalletDto: FundWalletDto): Promise<any> {
     const { amount, reference } = fundWalletDto;
+    //here we assume that the payment from the external payment provider is successful
+    //and we only need to update the wallet balance
 
     // Check if reference exists (Idempotency check #1 - Optimization)
     const existingTx = await this.transactionModel.findOne({ where: { reference } });
