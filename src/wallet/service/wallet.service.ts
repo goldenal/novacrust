@@ -3,9 +3,9 @@ import { Injectable, NotFoundException, BadRequestException, ConflictException, 
 import { InjectModel } from '@nestjs/sequelize';
 import { Sequelize } from 'sequelize-typescript';
 import { Transaction as SequelizeTransaction } from 'sequelize';
-import { Wallet } from './models/wallet.model';
-import { Transaction, TransactionType } from './models/transaction.model';
-import { CreateWalletDto, FundWalletDto, TransferWalletDto } from './dto/wallet.dto';
+import { Wallet } from '../models/wallet.model';
+import { Transaction, TransactionType } from '../models/transaction.model';
+import { CreateWalletDto, FundWalletDto, TransferWalletDto } from '../dto/wallet.dto';
 
 @Injectable()
 export class WalletService {

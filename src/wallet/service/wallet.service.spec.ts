@@ -2,8 +2,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/sequelize';
 import { WalletService } from './wallet.service';
-import { Wallet } from './models/wallet.model';
-import { Transaction } from './models/transaction.model';
+import { Wallet } from '../models/wallet.model';
+import { Transaction } from '../models/transaction.model';
 import { Sequelize } from 'sequelize-typescript';
 import { NotFoundException, ConflictException, BadRequestException } from '@nestjs/common';
 

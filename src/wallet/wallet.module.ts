@@ -1,8 +1,8 @@
 
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { WalletService } from './wallet.service';
-import { WalletController } from './wallet.controller';
+import { WalletService } from './service/wallet.service';
+import { WalletController } from './controller/wallet.controller';
 import { Wallet } from './models/wallet.model';
 import { Transaction } from './models/transaction.model';
 

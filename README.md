@@ -1,4 +1,4 @@
-# Financial-Grade Wallet Service
+# Novacrust Wallet Service
 
 A robust, financial-grade wallet system built with **NestJS**, **Sequelize**, and **PostgreSQL**.
 
