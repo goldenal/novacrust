@@ -194,3 +194,21 @@ The tests cover:
 
 - **Locking**: We use pessimistic locking (`LOCK_UPDATE`) on wallet rows during transfers to ensure that `balance` reads are consistent and no other transaction can modify the wallet until the transfer is complete.
 - **BigInt**: JavaScript `BigInt` is used for math operations, ensuring we can handle amounts larger than $9 quadrillion safely (though currently cast to `Number` for simple JSON responses, enabling easy integration).
+
+## 📊 Production Scalability
+
+This service is designed to be **highly scalable** for standard user traffic while prioritizing **strict data consistency** (financial safety).
+
+1.  **Application Tier (Stateless & Scalable)**:
+    - The NestJS application is completely **stateless**.
+    - **How it scales**: You can horizontally scale by deploying multiple instances (containers/pods) behind a Load Balancer (e.g., NGINX, AWS ALB). Throughput handles linearly with more instances.
+
+2.  **Database Tier (Robust & Integrity-Focused)**:
+    - Standard PostgreSQL handles millions of rows efficiently.
+    - **How it scales**: Supports Connection Pooling (PgBouncer) for high concurrency and Read Replicas for offloading `GET` requests.
+
+3.  **Concurrency & Throughput Trade-offs**:
+    - We use **Pessimistic Locking** (`SELECT ... FOR UPDATE`) to prevent double-spending.
+    - **Impact**: This guarantees accuracy but means transactions involving the _same_ wallet must be processed sequentially.
+    - **Scalability**:
+      - **Excellent** for millions of distinct users (locks are row-level, so User A doesn't block User B).
