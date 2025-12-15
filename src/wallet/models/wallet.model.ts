@@ -15,7 +15,7 @@ export class Wallet extends Model {
     type: DataType.STRING,
     defaultValue: 'USD',
   })
-  currency: string;
+  declare currency: string;
 
   @Column({
     type: DataType.BIGINT,
@@ -25,7 +25,7 @@ export class Wallet extends Model {
       min: 0,
     },
   })
-  balance: number; // In TypeScript we use number or string for BigInt, but Sequelize handles mapping
+  declare balance: number; // In TypeScript we use number or string for BigInt, but Sequelize handles mapping
 
   @HasMany(() => Transaction)
   transactions: Transaction[];

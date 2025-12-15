@@ -22,16 +22,16 @@ export class Transaction extends Model {
     type: DataType.UUID,
     allowNull: false,
   })
-  walletId: string;
+  declare walletId: string;
 
   @BelongsTo(() => Wallet)
-  wallet: Wallet;
+  declare wallet: Wallet;
 
   @Column({
     type: DataType.ENUM(...Object.values(TransactionType)),
     allowNull: false,
   })
-  type: TransactionType;
+  declare type: TransactionType;
 
   @Column({
     type: DataType.BIGINT,
@@ -40,18 +40,18 @@ export class Transaction extends Model {
       min: 1, // Positive integer
     },
   })
-  amount: number;
+  declare amount: number;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
     unique: true, // Idempotency key
   })
-  reference: string;
+  declare reference: string;
 
   @Column({
     type: DataType.JSONB,
     allowNull: true,
   })
-  metadata: any;
+  declare metadata: any;
 }
